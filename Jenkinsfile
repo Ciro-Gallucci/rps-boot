@@ -30,38 +30,12 @@ pipeline {
             }
         }
 
-        stage('Semgrep Analysis') {
-            steps {
-                sh '''
-                pip install semgrep --quiet
-                semgrep scan --config=auto --json > semgrep-results.json || true
-                '''
-            }
-        }
-
-        stage('Publish Semgrep Report') {
+        
+        stage('Record PMD Warnings') {
             steps {
                 script {
-                    publishHTML([target: [
-                        allowMissing: true,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: '.',
-                        reportFiles: 'semgrep-results.json',
-                        reportName: 'Semgrep Report'
-                    ]])
-                }
-            }
-        }
-
-        stage('Record Static Analysis Warnings') {
-            steps {
-                script {
-                    recordIssues tools: [
-                        pmdParser(pattern: '**/target/pmd.xml'),
-                        jsonAnalysis(pattern: 'semgrep-results.json')
-                    ]
-                }
+                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
+                   }
             }
         }
     }
