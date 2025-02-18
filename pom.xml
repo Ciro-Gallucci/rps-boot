@@ -26,7 +26,6 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -87,57 +86,51 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
-		    <plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		    </plugin>
-		    <plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findsecbugs-maven-plugin</artifactId>
-			<version>1.10.1</version>  <!-- Usa la versione più recente -->
-			<executions>
-			    <execution>
-				<goals>
-				    <goal>check</goal>
-				</goals>
-			    </execution>
-			</executions>
-		    </plugin>
-			
-	            <plugin>
-	                <groupId>org.apache.maven.plugins</groupId>
-	                <artifactId>maven-checkstyle-plugin</artifactId>
-	                <version>3.1.1</version>
-	                <executions>
-	                    <execution>
-	                        <goals>
-	                            <goal>check</goal>
-	                        </goals>
-	                    </execution>
-	                </executions>
-	                <configuration>
-	                    <configLocation>google_checks.xml</configLocation>
-	                    <failsOnError>true</failsOnError>
-	                </configuration>
-	            </plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 
-		    <plugin>
-		      <groupId>org.codehaus.mojo</groupId>
-		      <artifactId>findsecbugs-maven-plugin</artifactId>
-		      <version>1.10.1</version>
-		      <executions>
-		        <execution>
-		          <goals>
-		            <goal>check</goal>
-		          </goals>
-		        </execution>
-		      </executions>
-		    </plugin>
-	 	</plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findsecbugs-maven-plugin</artifactId>
+				<version>1.10.1</version> <!-- Usa la versione più recente -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+					<failsOnError>true</failsOnError>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
