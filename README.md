@@ -7,3 +7,6 @@ Pipeline configuration:
 - repository URL: https://github.com/Ciro-Gallucci/rps-boot.git
 - branch: */master
 - script path: Jenkinsfile
+
+Plugin needed:
+- Warnings
