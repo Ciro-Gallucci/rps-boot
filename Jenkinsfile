@@ -38,6 +38,40 @@ pipeline {
                    }
             }
         }
+
+        stage('Security Analysis with FindSecBugs') {
+            steps {
+                sh 'mvn spotbugs:check'
+            }
+        }
+        
+        stage('Publish FindSecBugs Report') {
+            steps {
+                script {
+                    publishHTML([target: [
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'target',
+                        reportFiles: 'spotbugsXml.xml',
+                        reportName: 'FindSecBugs Report'
+                    ]])
+                }
+            }
+        }
+        
+        stage('Record Warnings') {
+            steps {
+                script {
+                    // Raccogli i warning di PMD
+                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
+        
+                    // Raccogli i warning di FindSecBugs
+                    recordIssues tools: [spotBugs(pattern: '**/target/spotbugsXml.xml')]
+                }
+            }
+        }
+
     }
 
     post {
