@@ -101,12 +101,9 @@
 			<plugin>
 		            <groupId>org.apache.maven.plugins</groupId>
 		            <artifactId>maven-pmd-plugin</artifactId>
-		            <version>3.18.0</version>
+		            <version>3.13.0</version>
 		            <executions>
 		                <execution>
-				    <rulesets>
-            				<ruleset>/rulesets/java/quickstart.xml</ruleset>
-        			    </rulesets>
 		                    <phase>verify</phase>
 		                    <goals>
 		                        <goal>pmd</goal>
