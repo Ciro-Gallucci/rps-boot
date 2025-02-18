@@ -29,6 +29,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Record PMD Warnings') {
+            steps {
+                script {
+                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
+                }
+            }
+        }
     }
 
     post {
