@@ -14,35 +14,35 @@ pipeline {
             }
         }
 
-        stage('Publish PMD Report') {
+        stage('Publish FindSecBugs Report') {
             steps {
                 script {
-                    // Pubblica il report PMD come HTML su Jenkins
+                    // Pubblica il report FindSecBugs come HTML su Jenkins
                     publishHTML([target: [
                         allowMissing: true,
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: 'target/site',
-                        reportFiles: 'pmd.html',
-                        reportName: 'PMD Report'
+                        reportDir: 'target/findsecbugs',
+                        reportFiles: 'findsecbugs.html',
+                        reportName: 'FindSecBugs Report'
                     ]])
                 }
             }
         }
 
-        
-        stage('Record PMD Warnings') {
+        stage('Record FindSecBugs Warnings') {
             steps {
                 script {
-                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
-                   }
+                    // Registra i warning di FindSecBugs
+                    recordIssues(tools: [findSecBugs(pattern: '**/target/findsecbugs.xml')])
+                }
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/pmd.xml', fingerprint: true
+            archiveArtifacts artifacts: 'target/findsecbugs.xml', fingerprint: true
         }
     }
 }
