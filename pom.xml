@@ -99,21 +99,19 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-		            <groupId>org.apache.maven.plugins</groupId>
-		            <artifactId>maven-pmd-plugin</artifactId>
-		            <version>3.13.0</version>
+		            <groupId>org.codehaus.mojo</groupId>
+		            <artifactId>findsecbugs-maven-plugin</artifactId>
+		            <version>1.12.0</version>
 		            <executions>
 		                <execution>
 		                    <phase>verify</phase>
 		                    <goals>
-		                        <goal>pmd</goal>
+		                        <goal>check</goal>
 		                    </goals>
 		                </execution>
 		            </executions>
 		            <configuration>
-		                <rulesets>
-		                    <ruleset>/rulesets/java/quickstart.xml</ruleset>
-		                </rulesets>
+		                <failOnError>false</failOnError> <!-- Non fallire la build su errori, continua sempre -->
 		            </configuration>
 		        </plugin>
 		</plugins>
