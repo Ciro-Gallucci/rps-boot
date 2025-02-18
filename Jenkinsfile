@@ -8,36 +8,16 @@ pipeline {
             }
         }
 
-        stage('Build & Analyze') {
+        stage('Build & Static Analysis') {
             steps {
-                sh 'mvn clean verify'
-            }
-        }
-
-        stage('Publish FindSecBugs Report') {
-            steps {
+                // Esegui Maven con il comando che include FindSecBugs
                 script {
-                    // Pubblica il report FindSecBugs come HTML su Jenkins
-                    publishHTML([target: [
-                        allowMissing: true,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'target/findsecbugs',
-                        reportFiles: 'findsecbugs.html',
-                        reportName: 'FindSecBugs Report'
-                    ]])
+                    // Esegui il comando Maven con FindSecBugs
+                    sh 'mvn clean install findsecbugs:check'
                 }
             }
         }
 
-        stage('Record FindSecBugs Warnings') {
-            steps {
-                script {
-                    // Registra i warning di FindSecBugs
-                    recordIssues(tools: [findSecBugs(pattern: '**/target/findsecbugs.xml')])
-                }
-            }
-        }
     }
 
     post {
