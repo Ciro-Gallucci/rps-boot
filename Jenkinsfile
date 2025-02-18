@@ -30,12 +30,12 @@ pipeline {
             }
         }
 
-        
         stage('Record PMD Warnings') {
             steps {
                 script {
-                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
-                   }
+                    // Raccogli i warning di PMD
+                    recordIssues tools: [pmd(pattern: '**/target/pmd.xml')]
+                }
             }
         }
 
@@ -64,19 +64,18 @@ pipeline {
             steps {
                 script {
                     // Raccogli i warning di PMD
-                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
+                    recordIssues tools: [pmd(pattern: '**/target/pmd.xml')]
         
                     // Raccogli i warning di FindSecBugs
                     recordIssues tools: [spotBugs(pattern: '**/target/spotbugsXml.xml')]
                 }
             }
         }
-
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/pmd.xml', fingerprint: true
+            archiveArtifacts artifacts: 'target/pmd.xml, target/spotbugsXml.xml', fingerprint: true
         }
     }
 }
