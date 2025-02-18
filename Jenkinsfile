@@ -30,15 +30,6 @@ pipeline {
             }
         }
 
-        stage('Record PMD Warnings') {
-            steps {
-                script {
-                    // Raccogli i warning di PMD
-                    recordIssues tools: [pmd(pattern: '**/target/pmd.xml')]
-                }
-            }
-        }
-
         stage('Security Analysis with FindSecBugs') {
             steps {
                 sh 'mvn spotbugs:check'
@@ -64,7 +55,7 @@ pipeline {
             steps {
                 script {
                     // Raccogli i warning di PMD
-                    recordIssues tools: [pmd(pattern: '**/target/pmd.xml')]
+                    recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
         
                     // Raccogli i warning di FindSecBugs
                     recordIssues tools: [spotBugs(pattern: '**/target/spotbugsXml.xml')]
