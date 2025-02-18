@@ -105,17 +105,15 @@
             </plugin>
 
             <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.3</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.14.0</version> <!-- Puoi usare l'ultima versione disponibile -->
                 <executions>
                     <execution>
                         <goals>
-                            <goal>check</goal>
+                            <goal>pmd</goal>
                         </goals>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
+                        <phase>validate</phase> <!-- Puoi cambiare la fase in base a quando vuoi eseguire il check -->
                     </execution>
                 </executions>
             </plugin>
