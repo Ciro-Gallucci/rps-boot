@@ -52,15 +52,15 @@ pipeline {
                     ]])
                 }
             }
-            
-            stage('Record Static Analysis Warnings') {
-                steps {
-                    script {
-                        recordIssues tools: [
-                            pmdParser(pattern: '**/target/pmd.xml'),
-                            jsonAnalysis(pattern: 'semgrep-results.json')
-                        ]
-                    }
+        }
+
+        stage('Record Static Analysis Warnings') {
+            steps {
+                script {
+                    recordIssues tools: [
+                        pmdParser(pattern: '**/target/pmd.xml'),
+                        jsonAnalysis(pattern: 'semgrep-results.json')
+                    ]
                 }
             }
         }
