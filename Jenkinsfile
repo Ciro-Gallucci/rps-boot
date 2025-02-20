@@ -1,28 +1,28 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'mvn' 
+    }
     stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/Ciro-Gallucci/rps-boot.git'
             }
         }
-
-        stage('Build & Static Analysis') {
+        stage('Build') {
             steps {
-                // Esegui Maven con il comando che include FindSecBugs
-                script {
-                    // Esegui il comando Maven con FindSecBugs
-                    sh 'mvn clean install findsecbugs:check'
-                }
+                sh 'mvn clean compile'
             }
         }
-
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'target/findsecbugs.xml', fingerprint: true
+        stage('Static Analysis - FindSecurityBugs') {
+            steps {
+                sh 'mvn spotbugs:spotbugs'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'target/spotbugsXml.xml', fingerprint: true
+                }
+            }
         }
     }
 }
